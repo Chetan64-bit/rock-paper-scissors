@@ -17,6 +17,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   max-width: 400px;
+  width: 90%;
 }
 
 h1 {
@@ -30,20 +31,31 @@ h1 {
   margin-bottom: 20px;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 .buttons button {
   margin: 10px;
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 12px 20px;
+  font-size: 20px;
   background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .buttons button:hover {
   background-color: #1d4ed8;
+}
+
+.buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .results {

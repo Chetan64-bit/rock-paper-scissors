@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import "./style.css";
 
-const choices = ["Rock", "Paper", "Scissors"];
+const choices = [
+  { name: "Rock", emoji: "✊" },
+  { name: "Paper", emoji: "✋" },
+  { name: "Scissors", emoji: "✌️" }
+];
 
 const App = () => {
   const [playerChoice, setPlayerChoice] = useState("");
@@ -13,15 +17,15 @@ const App = () => {
 
   const play = (playerPick) => {
     setIsLoading(true);
-    setResult("Shuffling... 🤖"); // Show animation text
+    setResult("Shuffling... 🤖");
 
     setTimeout(() => {
-      const computerPick = choices[Math.floor(Math.random() * 3)];
+      const computerPick = choices[Math.floor(Math.random() * 3)].name;
       setPlayerChoice(playerPick);
       setComputerChoice(computerPick);
       getResult(playerPick, computerPick);
       setIsLoading(false);
-    }, 1000); // 1 second animation delay
+    }, 1000);
   };
 
   const getResult = (player, computer) => {
@@ -50,7 +54,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>🪨📄✂️ Rock Paper Scissors ✂️📄🪨</h1>
+      <h1>✂️ Rock Paper Scissors ✂️📄</h1>
 
       <div className="scoreboard">
         <p>👦 Player: {playerScore}</p>
@@ -59,15 +63,30 @@ const App = () => {
 
       <div className="buttons">
         {choices.map((choice) => (
-          <button key={choice} onClick={() => play(choice)} disabled={isLoading}>
-            {choice}
+          <button
+            key={choice.name}
+            onClick={() => play(choice.name)}
+            disabled={isLoading}
+          >
+            {choice.emoji}
+            <br />
+            {choice.name}
           </button>
         ))}
       </div>
 
       <div className="results">
-        <p><strong>Your Choice:</strong> {playerChoice}</p>
-        <p><strong>Computer's Choice:</strong> {computerChoice}</p>
+        <p>
+          <strong>Your Choice:</strong>{" "}
+          {playerChoice && choices.find((c) => c.name === playerChoice).emoji}{" "}
+          {playerChoice}
+        </p>
+        <p>
+          <strong>Computer's Choice:</strong>{" "}
+          {computerChoice &&
+            choices.find((c) => c.name === computerChoice).emoji}{" "}
+          {computerChoice}
+        </p>
         <h2>{result}</h2>
       </div>
 
