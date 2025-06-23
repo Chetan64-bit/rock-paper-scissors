@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles.css"; // we'll create this file next
+import "./style.css";
 
 const choices = ["Rock", "Paper", "Scissors"];
 
