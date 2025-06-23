@@ -7,12 +7,21 @@ const App = () => {
   const [playerChoice, setPlayerChoice] = useState("");
   const [computerChoice, setComputerChoice] = useState("");
   const [result, setResult] = useState("");
+  const [playerScore, setPlayerScore] = useState(0);
+  const [computerScore, setComputerScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const play = (playerPick) => {
-    const computerPick = choices[Math.floor(Math.random() * 3)];
-    setPlayerChoice(playerPick);
-    setComputerChoice(computerPick);
-    getResult(playerPick, computerPick);
+    setIsLoading(true);
+    setResult("Shuffling... 🤖"); // Show animation text
+
+    setTimeout(() => {
+      const computerPick = choices[Math.floor(Math.random() * 3)];
+      setPlayerChoice(playerPick);
+      setComputerChoice(computerPick);
+      getResult(playerPick, computerPick);
+      setIsLoading(false);
+    }, 1000); // 1 second animation delay
   };
 
   const getResult = (player, computer) => {
@@ -24,34 +33,49 @@ const App = () => {
       (player === "Scissors" && computer === "Paper")
     ) {
       setResult("You Win!");
+      setPlayerScore((prev) => prev + 1);
     } else {
       setResult("You Lose!");
+      setComputerScore((prev) => prev + 1);
     }
+  };
+
+  const resetGame = () => {
+    setPlayerChoice("");
+    setComputerChoice("");
+    setResult("");
+    setPlayerScore(0);
+    setComputerScore(0);
   };
 
   return (
     <div className="app">
-      <h1>Rock Paper Scissors</h1>
+      <h1>🪨📄✂️ Rock Paper Scissors ✂️📄🪨</h1>
+
+      <div className="scoreboard">
+        <p>👦 Player: {playerScore}</p>
+        <p>🤖 Computer: {computerScore}</p>
+      </div>
+
       <div className="buttons">
         {choices.map((choice) => (
-          <button key={choice} onClick={() => play(choice)}>
+          <button key={choice} onClick={() => play(choice)} disabled={isLoading}>
             {choice}
           </button>
         ))}
       </div>
 
       <div className="results">
-        <p>Your Choice: <strong>{playerChoice}</strong></p>
-        <p>Computer's Choice: <strong>{computerChoice}</strong></p>
+        <p><strong>Your Choice:</strong> {playerChoice}</p>
+        <p><strong>Computer's Choice:</strong> {computerChoice}</p>
         <h2>{result}</h2>
       </div>
+
+      <button className="reset-btn" onClick={resetGame}>
+        🔄 Reset Game
+      </button>
     </div>
   );
 };
 
 export default App;
-
-// This is a simple React component for a Rock Paper Scissors game.
-// It currently only displays a title. You can expand this component to include game logic, player
-// choices, and results. Consider adding buttons for "Rock", "Paper", and "Sc
-  
